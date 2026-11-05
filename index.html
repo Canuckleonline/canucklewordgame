@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canuckle Word Game – Play Today’s Canadian Puzzle Free</title>
+<meta name="description" content="Play the Canuckle word game online: find today’s five-letter Canadian word in six guesses. Red, gold and grey tiles guide you, with hints, a practice mode and a Canada fact after every round.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Canuckle Word Game – Play Today’s Canadian Puzzle Free">
+<meta property="og:description" content="Six guesses, five letters, one Canadian word a day.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"VideoGame",
+      "name":"Canuckle Word Game",
+      "genre":"Word puzzle",
+      "gamePlatform":"Web browser",
+      "inLanguage":"en",
+      "description":"Daily Canadian five-letter word puzzle with hints, practice rounds and fun facts.",
+      "offers":{"@type":"Offer","price":"0","priceCurrency":"CAD"}
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"What is the Canuckle word game?","acceptedAnswer":{"@type":"Answer","text":"Canuckle is a daily word puzzle in which you guess a five-letter word with a Canadian connection in six tries. Coloured tiles show which letters are correct after every guess."}},
+        {"@type":"Question","name":"What do the colours mean in Canuckle?","acceptedAnswer":{"@type":"Answer","text":"Red means the letter is in the word and in the right spot, gold means it is in the word but in a different spot, and grey means the letter is not in the word."}},
+        {"@type":"Question","name":"How are repeated letters scored?","acceptedAnswer":{"@type":"Answer","text":"Each letter in the answer can only colour one tile. If you guess a letter twice but the answer contains it once, only one tile turns red or gold and the other turns grey."}},
+        {"@type":"Question","name":"Can I play more than one Canuckle a day?","acceptedAnswer":{"@type":"Answer","text":"Yes. After the daily word, switch to practice mode for unlimited extra rounds. Practice rounds do not affect your daily streak."}},
+        {"@type":"Question","name":"Do hints break my streak?","acceptedAnswer":{"@type":"Answer","text":"No. Hints never reset your streak, but your shared result shows how many hints you used."}},
+        {"@type":"Question","name":"Does Canuckle work on my phone?","acceptedAnswer":{"@type":"Answer","text":"Yes. The game runs in any modern mobile browser with an on-screen keyboard, and no app or sign-up is needed."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div class="flagbar" aria-hidden="true"><i></i><i></i><i></i></div>
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a href="#" class="logo" aria-label="Canuckle home">
+      <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><path d="M16 2l2.6 6.4 5-2.6-1.4 6.8 5.8-1.2-2 4.6 3.6 1.4-8 6.2.8 3.2-6.4-1.2V30h-1.6v-4.6l-6.4 1.2.8-3.2-8-6.2 3.6-1.4-2-4.6 5.8 1.2-1.4-6.8 5 2.6z" fill="#d52b1e"/></svg>
+      <span>Canuckle</span>
+    </a>
+    <button class="burger" aria-label="Menu" onclick="document.querySelector('.nav').classList.toggle('open')"><span></span><span></span></button>
+    <nav class="nav">
+      <a href="#" class="cur">Play</a>
+      <a href="#guide">Guide</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="play wrap">
+    <div class="play-head">
+      <h1>Canuckle Word Game</h1>
+      <p>Find today’s five-letter Canadian word in six guesses. Want the past-puzzle calendar and daily hint page too? Play the full <a href="https://canukle.com/">Canuckle word game</a> on the official site.</p>
+    </div>
+
+    <!-- ===== GAME ===== -->
+    <div class="game" id="game">
+      <div class="bar">
+        <div class="mode" role="group" aria-label="Game mode">
+          <button type="button" data-m="daily" class="on">Today <span id="pz-no"></span></button>
+          <button type="button" data-m="practice">Practice</button>
+        </div>
+        <div class="tools">
+          <button type="button" class="ic" id="b-hint" title="Hint" aria-label="Hint"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <button type="button" class="ic" id="b-stats" title="Statistics" aria-label="Statistics"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <button type="button" class="ic" id="b-hc" title="High contrast" aria-label="Toggle high contrast colours"><svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+        </div>
+      </div>
+      <div class="hints" id="hints" aria-live="polite"></div>
+      <div class="board" id="board" aria-label="Game board"></div>
+      <div class="kb" id="kb" aria-label="Keyboard"></div>
+      <p class="rule-note">Any five letters with at least one vowel are accepted as a guess.</p>
+    </div>
+
+    <div class="legend" aria-label="Colour legend">
+      <span><i class="c"></i>Right letter, right spot</span>
+      <span><i class="p"></i>In the word, wrong spot</span>
+      <span><i class="a"></i>Not in the word</span>
+    </div>
+  </section>
+
+  <div class="wrap content" id="guide">
+
+    <section class="sec intro2">
+      <div>
+        <p class="tag">About the game</p>
+        <h2>What is the Canuckle word game?</h2>
+        <p>Canuckle is a daily guessing game built around Canada. Every answer is a five-letter word tied to the country – from wildlife on our coins to the snacks in our sugar shacks. You get six guesses, and after each one the tiles tell you which letters are right, which are close and which you can forget about.</p>
+        <p>One shared puzzle per day means everyone in the country is chasing the same word, which makes comparing results with friends and family part of the fun.</p>
+      </div>
+      <div class="facts">
+        <div><b>5</b><span>letters</span></div>
+        <div><b>6</b><span>guesses</span></div>
+        <div><b>3</b><span>hints</span></div>
+        <div><b>1</b><span>word a day</span></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <p class="tag">Scoring</p>
+      <h2>How repeated letters are scored</h2>
+      <p class="lead">Double letters trip up new players more than anything else. The rule is simple: each letter in the answer can only light up one tile.</p>
+      <div class="dup">
+        <div class="dup-card">
+          <p class="dup-a">Answer: <b>BISON</b></p>
+          <div class="ex-row"><span class="t a">S</span><span class="t a">A</span><span class="t c">S</span><span class="t a">S</span><span class="t a">Y</span></div>
+          <p>Guessing <b>SASSY</b>: the S in the middle is red. The other two S tiles turn grey, because BISON contains only one S and it is already matched.</p>
+        </div>
+        <div class="dup-card">
+          <p class="dup-a">Answer: <b>GOOSE</b></p>
+          <div class="ex-row"><span class="t p">O</span><span class="t c">O</span><span class="t a">M</span><span class="t a">P</span><span class="t a">H</span></div>
+          <p>Guessing <b>OOMPH</b>: both O tiles light up because GOOSE really has two Os – one is in the right spot (red), the other belongs elsewhere (gold).</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <p class="tag">Think Canadian</p>
+      <h2>Where the answers come from</h2>
+      <div class="cats">
+        <article><h3>Wildlife</h3><p>From cranes nesting in Wood Buffalo to belugas in Hudson Bay.</p><div class="mini"><span>EAGLE</span><span>WHALE</span><span>SNOWY</span></div></article>
+        <article><h3>Food &amp; drink</h3><p>Sugar-shack treats, Montreal bakeries and Quebec orchards.</p><div class="mini"><span>TAFFY</span><span>BAGEL</span><span>CIDER</span></div></article>
+        <article><h3>Land &amp; weather</h3><p>Record cold, warm prairie winds and the highest tides on Earth.</p><div class="mini"><span>WINDS</span><span>FROST</span><span>TIDES</span></div></article>
+        <article><h3>History &amp; culture</h3><p>The fur trade, the railway, the flag and Indigenous traditions.</p><div class="mini"><span>PELTS</span><span>TRAIN</span><span>BEADS</span></div></article>
+      </div>
+    </section>
+
+    <section class="sec split">
+      <div>
+        <p class="tag">Strategy</p>
+        <h2>A three-guess routine that works</h2>
+        <ol class="routine">
+          <li><b>Guess 1 – cover vowels.</b> Start with a word rich in vowels and common letters, such as CANOE or AROSE.</li>
+          <li><b>Guess 2 – new consonants.</b> Use five fresh letters you have not tried yet, for example LIGHT or DUMPY, even if you already have a gold tile.</li>
+          <li><b>Guess 3 – think theme.</b> With most letters known, ask yourself: animal, food, place or slang? The Canadian theme narrows the list fast.</li>
+        </ol>
+      </div>
+      <aside class="side-card">
+        <h3>Common mistakes</h3>
+        <ul>
+          <li>Re-using grey letters in later guesses.</li>
+          <li>Putting a gold letter back in the same spot.</li>
+          <li>Forgetting that words like GEESE or TAFFY repeat a letter.</li>
+          <li>Using the first-letter hint too early.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="sec">
+      <p class="tag">Comparison</p>
+      <h2>Canuckle vs Wordle at a glance</h2>
+      <div class="tbl">
+        <table>
+          <thead><tr><th></th><th>Canuckle</th><th>Wordle</th></tr></thead>
+          <tbody>
+            <tr><td>Word length</td><td>5 letters</td><td>5 letters</td></tr>
+            <tr><td>Guesses</td><td>6</td><td>6</td></tr>
+            <tr><td>Answers</td><td>Canadian theme</td><td>General English</td></tr>
+            <tr><td>Tile colours</td><td>Red, gold, grey</td><td>Green, yellow, grey</td></tr>
+            <tr><td>Hints</td><td>Topic, vowels, first letter</td><td>None</td></tr>
+            <tr><td>Extra rounds</td><td>Unlimited practice</td><td>One per day</td></tr>
+            <tr><td>After you finish</td><td>A fun fact about Canada</td><td>Statistics only</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sec">
+      <p class="tag">FAQ</p>
+      <h2>Canuckle word game FAQ</h2>
+      <div class="faq">
+        <details open><summary>What is the Canuckle word game?</summary><p>Canuckle is a daily word puzzle in which you guess a five-letter word with a Canadian connection in six tries. Coloured tiles show which letters are correct after every guess.</p></details>
+        <details><summary>What do the colours mean in Canuckle?</summary><p>Red means the letter is in the word and in the right spot, gold means it is in the word but in a different spot, and grey means the letter is not in the word.</p></details>
+        <details><summary>How are repeated letters scored?</summary><p>Each letter in the answer can only colour one tile. If you guess a letter twice but the answer contains it once, only one tile turns red or gold and the other turns grey.</p></details>
+        <details><summary>Can I play more than one Canuckle a day?</summary><p>Yes. After the daily word, switch to practice mode for unlimited extra rounds. Practice rounds do not affect your daily streak.</p></details>
+        <details><summary>Do hints break my streak?</summary><p>No. Hints never reset your streak, but your shared result shows how many hints you used.</p></details>
+        <details><summary>Does Canuckle work on my phone?</summary><p>Yes. The game runs in any modern mobile browser with an on-screen keyboard, and no app or sign-up is needed.</p></details>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="ftr" id="contact">
+  <div class="wrap ftr-in">
+    <div>
+      <span class="logo light"><span>Canuckle</span></span>
+      <p>The daily Canadian word game – free, quick and proudly Canadian.</p>
+    </div>
+    <nav>
+      <a href="#game">Play</a>
+      <a href="#guide">Guide</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy</a>
+    </nav>
+  </div>
+  <p class="wrap ftr-copy">© <span id="yr"></span> Canuckle · Daily Canadian word game.</p>
+</footer>
+
+<!-- RESULT / STATS MODAL -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title" hidden>
+  <div class="m-box">
+    <button class="m-x" id="m-x" aria-label="Close">×</button>
+    <div id="m-result">
+      <p class="m-k" id="m-k">Well done!</p>
+      <h2 id="m-title">MOOSE</h2>
+      <p class="m-cat" id="m-cat">Wildlife</p>
+      <p class="m-fact" id="m-fact"></p>
+    </div>
+    <h3 class="m-h">Statistics</h3>
+    <div class="m-stats">
+      <div><b id="st-p">0</b><span>Played</span></div>
+      <div><b id="st-w">0</b><span>Win %</span></div>
+      <div><b id="st-s">0</b><span>Streak</span></div>
+      <div><b id="st-b">0</b><span>Best</span></div>
+    </div>
+    <h3 class="m-h">Guess distribution</h3>
+    <div class="dist" id="dist"></div>
+    <div class="m-act">
+      <button class="share" id="b-share">Share result</button>
+      <button class="again" id="b-again">Play practice round</button>
+    </div>
+    <p class="next" id="next"></p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var W=[
+    ['EAGLE','Wildlife','Thousands of bald eagles gather near Brackendale, B.C., every winter to feed on salmon.'],
+    ['TOQUE','Slang','Canadians call a knitted winter hat a toque – some write it “tuque”.'],
+    ['TRAIL','Places','The Trans Canada Trail links coast to coast to coast and is one of the longest trail networks in the world.'],
+    ['BAGEL','Food','Montreal bagels are boiled in honey-sweetened water and baked in wood-fired ovens.'],
+    ['MOOSE','Wildlife','A moose can swim several kilometres and dive to feed on water plants.'],
+    ['FERRY','Places','BC Ferries runs one of the largest passenger ferry fleets in the world.'],
+    ['TAFFY','Food','Maple taffy is made by pouring hot syrup on fresh snow and rolling it onto a stick.'],
+    ['CRANE','Wildlife','The last natural nesting grounds of whooping cranes are in Wood Buffalo National Park.'],
+    ['HAIDA','Culture','The Haida Nation lives on Haida Gwaii, an archipelago off the north coast of B.C.'],
+    ['SYRUP','Food','It takes about 40 litres of maple sap to make one litre of syrup.'],
+    ['FLAGS','History','The red-and-white maple leaf flag was first raised on February 15, 1965.'],
+    ['HOSER','Slang','“Hoser” became famous through Bob and Doug McKenzie on the TV show SCTV.'],
+    ['WHALE','Wildlife','Thousands of beluga whales gather near Churchill, Manitoba, every summer.'],
+    ['CIDER','Food','Ice cider – made from frozen apples or juice – was first produced in Quebec.'],
+    ['INUIT','Culture','Nunavut, created in 1999, means “our land” in Inuktitut.'],
+    ['PUCKS','Sports','Official NHL pucks are made of vulcanised rubber and weigh about 170 grams.'],
+    ['TRAIN','History','The Canadian Pacific Railway was completed in 1885, linking B.C. to the rest of Canada.'],
+    ['SNOWY','Wildlife','The snowy owl is the official bird of Quebec.'],
+    ['LOONS','Wildlife','The common loon appears on the one-dollar coin, which is why it is called the loonie.'],
+    ['PELTS','History','The Hudson’s Bay Company was founded in 1670 to trade furs.'],
+    ['SUGAR','Food','Every spring, Quebec families visit a cabane à sucre – a sugar shack – for maple feasts.'],
+    ['WINDS','Nature','Chinook winds can raise temperatures in southern Alberta by more than 20 °C in a few hours.'],
+    ['CANOE','Culture','The canoe was the main way to travel and trade across the country for centuries.'],
+    ['BEADS','Culture','Métis artists are known for floral beadwork, earning them the name “Flower Beadwork People”.'],
+    ['SEALS','Wildlife','Harp seal pups are born on the sea ice of the Gulf of St. Lawrence in late winter.'],
+    ['BISON','Wildlife','Plains bison once roamed the prairies in herds of millions.'],
+    ['YUKON','Places','The Klondike Gold Rush of the late 1890s brought tens of thousands of people to the Yukon.'],
+    ['CURDS','Food','Cheese curds are freshest on the day they are made – that is when they squeak.'],
+    ['SORRY','Slang','Canadians are so known for apologising that Ontario passed an Apology Act in 2009.'],
+    ['FROST','Nature','Snag, Yukon, holds North America’s record low of −63 °C, set in 1947.'],
+    ['IGLOO','Culture','A well-built snow house can stay many degrees warmer inside than the air outside.'],
+    ['BANFF','Places','Banff National Park, founded in 1885, was Canada’s first national park.'],
+    ['TIDES','Nature','The Bay of Fundy has the highest tides on Earth, reaching about 16 metres.'],
+    ['GOOSE','Wildlife','Canada geese mate for life and return to the same nesting areas every year.'],
+    ['POLAR','Wildlife','Polar bears wait on the shore near Churchill each autumn for Hudson Bay to freeze.'],
+    ['KAYAK','Culture','Inuit hunters built kayaks from driftwood or bone frames covered with sealskin.'],
+    ['MAPLE','Nature','Canada has ten native species of maple tree.']
+  ];
+  var START=new Date(2026,0,1);
+  var KEYS=['QWERTYUIOP','ASDFGHJKL','>ZXCVBNM<'];
+  var mode='daily', ans, info, guesses=[], cur='', over=false, won=false, hintN=0, busy=false, dayIdx;
+
+  function store(k,v){ try{ if(v===undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k,JSON.stringify(v)); }catch(e){ return null; } }
+  function today(){ var n=new Date(); var d=new Date(n.getFullYear(),n.getMonth(),n.getDate()); return Math.round((d-START)/864e5); }
+  function toast(t,ms){ var e=$('toast'); e.textContent=t; e.classList.add('show'); clearTimeout(e._t); e._t=setTimeout(function(){e.classList.remove('show');},ms||1600); }
+
+  /* build board + keyboard */
+  var board=$('board');
+  for(var r=0;r<6;r++){ var row=document.createElement('div'); row.className='row'; for(var c=0;c<5;c++){ var t=document.createElement('div'); t.className='tile'; row.appendChild(t);} board.appendChild(row); }
+  KEYS.forEach(function(line){
+    var row=document.createElement('div'); row.className='kb-row';
+    line.split('').forEach(function(k){
+      var b=document.createElement('button'); b.type='button';
+      if(k==='>'){ b.textContent='Enter'; b.dataset.k='ENTER'; b.className='wide'; }
+      else if(k==='<'){ b.innerHTML='⌫'; b.dataset.k='BACK'; b.className='wide'; b.setAttribute('aria-label','Backspace'); }
+      else { b.textContent=k; b.dataset.k=k; }
+      row.appendChild(b);
+    });
+    $('kb').appendChild(row);
+  });
+
+  function score(g,a){
+    var res=Array(5).fill('a'), pool={};
+    for(var i=0;i<5;i++){ if(g[i]===a[i]) res[i]='c'; else pool[a[i]]=(pool[a[i]]||0)+1; }
+    for(i=0;i<5;i++){ if(res[i]!=='c' && pool[g[i]]){ res[i]='p'; pool[g[i]]--; } }
+    return res;
+  }
+  function paintRow(ri,word,res,animate,done){
+    var tiles=board.children[ri].children;
+    for(var i=0;i<5;i++){
+      (function(i){
+        var t=tiles[i]; t.textContent=word[i]||''; t.className='tile'+(word[i]?' filled':'');
+        if(!res) return;
+        if(animate){ setTimeout(function(){ t.classList.add('flip'); setTimeout(function(){ t.classList.add(res[i]); },250); },i*280); }
+        else t.classList.add(res[i]);
+      })(i);
+    }
+    if(animate && done) setTimeout(done,5*280+300);
+  }
+  function paintKeys(){
+    var st={};
+    guesses.forEach(function(g){ var r=score(g,ans); for(var i=0;i<5;i++){ var p=st[g[i]]; var v=r[i]; if(p==='c') continue; if(p==='p' && v==='a') continue; st[g[i]]=v; } });
+    $('kb').querySelectorAll('button').forEach(function(b){ var k=b.dataset.k; b.classList.remove('c','p','a'); if(st[k]) b.classList.add(st[k]); });
+  }
+  function drawAll(){
+    for(var r=0;r<6;r++){
+      if(r<guesses.length) paintRow(r,guesses[r],score(guesses[r],ans),false);
+      else if(r===guesses.length && !over) paintRow(r,cur,null);
+      else paintRow(r,'',null);
+    }
+    paintKeys(); drawHints();
+  }
+  function drawHints(){
+    var vowels=ans.split('').filter(function(x){return 'AEIOU'.indexOf(x)>-1;}).length;
+    var h=[['Topic',info[1]],['Vowels',vowels+(vowels===1?' vowel':' vowels')],['First letter',ans[0]]];
+    $('hints').innerHTML=hintN?h.slice(0,hintN).map(function(x){return '<span><em>'+x[0]+'</em>'+x[1]+'</span>';}).join(''):'';
+  }
+
+  function save(){ if(mode==='daily') store('cw-day-'+dayIdx,{g:guesses,o:over,w:won,h:hintN}); }
+  function stats(){ return store('cw-stats')||{p:0,w:0,s:0,b:0,d:[0,0,0,0,0,0],last:-9}; }
+  function record(win){
+    if(mode!=='daily') return;
+    var s=stats(); s.p++;
+    if(win){ s.w++; s.d[guesses.length-1]++; s.s=(s.last===dayIdx-1)?s.s+1:1; s.b=Math.max(s.b,s.s); s.last=dayIdx; }
+    else { s.s=0; }
+    store('cw-stats',s);
+  }
+
+  function load(m){
+    mode=m; cur=''; busy=false;
+    document.querySelectorAll('.mode button').forEach(function(b){b.classList.toggle('on',b.dataset.m===m);});
+    if(m==='daily'){
+      dayIdx=today(); info=W[((dayIdx%W.length)+W.length)%W.length]; ans=info[0];
+      $('pz-no').textContent='#'+(dayIdx+1);
+      var s=store('cw-day-'+dayIdx);
+      guesses=s?s.g:[]; over=s?s.o:false; won=s?s.w:false; hintN=s?s.h:0;
+    } else {
+      var prev=ans; do{ info=W[Math.floor(Math.random()*W.length)]; }while(info[0]===prev);
+      ans=info[0]; guesses=[]; over=false; won=false; hintN=0;
+    }
+    drawAll();
+    if(over && mode==='daily') setTimeout(function(){openModal(true);},300);
+  }
+
+  function submit(){
+    if(busy||over) return;
+    var row=board.children[guesses.length];
+    if(cur.length<5){ row.classList.remove('shake'); void row.offsetWidth; row.classList.add('shake'); toast('Not enough letters'); return; }
+    if(!/[AEIOUY]/.test(cur)){ row.classList.remove('shake'); void row.offsetWidth; row.classList.add('shake'); toast('Try a real word'); return; }
+    var g=cur; guesses.push(g); cur=''; busy=true;
+    var res=score(g,ans);
+    paintRow(guesses.length-1,g,res,true,function(){
+      busy=false; paintKeys();
+      if(g===ans){ over=true; won=true; record(true); save(); var msg=['Genius!','Magnificent!','Impressive!','Splendid!','Great!','Phew!'][guesses.length-1]; toast(msg); var tiles=board.children[guesses.length-1].children; for(var i=0;i<5;i++){(function(t,i){setTimeout(function(){t.classList.add('bounce');},i*90);})(tiles[i],i);} setTimeout(function(){openModal(true);},1400); }
+      else if(guesses.length===6){ over=true; won=false; record(false); save(); toast(ans,2400); setTimeout(function(){openModal(true);},1400); }
+      else save();
+    });
+  }
+  function press(k){
+    if(over||busy) return;
+    if(k==='ENTER') return submit();
+    if(k==='BACK'){ cur=cur.slice(0,-1); }
+    else if(/^[A-Z]$/.test(k) && cur.length<5){ cur+=k; var t=board.children[guesses.length].children[cur.length-1]; t.classList.remove('pop'); void t.offsetWidth; t.classList.add('pop'); }
+    paintRow(guesses.length,cur,null);
+  }
+  $('kb').addEventListener('click',function(e){ var b=e.target.closest('button'); if(b){ press(b.dataset.k); b.blur(); } });
+  document.addEventListener('keydown',function(e){
+    if(e.ctrlKey||e.metaKey||e.altKey) return;
+    if(!$('modal').hidden){ if(e.key==='Escape') closeModal(); return; }
+    var tag=(e.target.tagName||'').toLowerCase(); if(tag==='input'||tag==='textarea') return;
+    if(e.key==='Enter'){ e.preventDefault(); press('ENTER'); }
+    else if(e.key==='Backspace') press('BACK');
+    else if(/^[a-zA-Z]$/.test(e.key)) press(e.key.toUpperCase());
+  });
+
+  $('b-hint').addEventListener('click',function(){
+    if(hintN>=3){ toast('All hints used'); return; }
+    hintN++; drawHints(); save();
+  });
+  $('b-hc').addEventListener('click',function(){ document.body.classList.toggle('hc'); store('cw-hc',document.body.classList.contains('hc')); });
+  if(store('cw-hc')) document.body.classList.add('hc');
+  document.querySelectorAll('.mode button').forEach(function(b){ b.addEventListener('click',function(){ if(b.dataset.m==='practice' || mode!=='daily') load(b.dataset.m); }); });
+
+  /* modal */
+  var cd;
+  function openModal(showResult){
+    var s=stats();
+    $('m-result').style.display=showResult&&over?'':'none';
+    if(over){
+      $('m-k').textContent=won?['Genius!','Magnificent!','Impressive!','Splendid!','Great!','Phew!'][guesses.length-1]:'So close – the word was';
+      $('m-title').textContent=ans; $('m-cat').textContent=info[1]; $('m-fact').textContent=info[2];
+    }
+    $('st-p').textContent=s.p; $('st-w').textContent=s.p?Math.round(s.w/s.p*100):0; $('st-s').textContent=s.s; $('st-b').textContent=s.b;
+    var mx=Math.max.apply(null,s.d.concat([1]));
+    $('dist').innerHTML=s.d.map(function(n,i){ var hl=over&&won&&mode==='daily'&&guesses.length===i+1; return '<div><span>'+(i+1)+'</span><i><s class="'+(hl?'hl':'')+'" style="width:'+Math.max(8,n/mx*100)+'%">'+n+'</s></i></div>'; }).join('');
+    $('b-share').style.display=over?'':'none';
+    clearInterval(cd);
+    if(mode==='daily'){ var tick=function(){ var n=new Date(), m=new Date(n.getFullYear(),n.getMonth(),n.getDate()+1), d=m-n; var h=Math.floor(d/36e5), mi=Math.floor(d%36e5/6e4), se=Math.floor(d%6e4/1e3); $('next').textContent='Next daily word in '+h+'h '+String(mi).padStart(2,'0')+'m '+String(se).padStart(2,'0')+'s'; }; tick(); cd=setInterval(tick,1000); }
+    else $('next').textContent='Practice rounds do not count towards your stats.';
+    $('modal').hidden=false;
+  }
+  function closeModal(){ $('modal').hidden=true; clearInterval(cd); }
+  $('m-x').addEventListener('click',closeModal);
+  $('modal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+  $('b-stats').addEventListener('click',function(){ openModal(over); });
+  $('b-again').addEventListener('click',function(){ closeModal(); load('practice'); });
+  $('b-share').addEventListener('click',function(){
+    var hc=document.body.classList.contains('hc'), em={c:hc?'🟧':'🟥',p:hc?'🟦':'🟨',a:'⬛'};
+    var grid=guesses.map(function(g){ return score(g,ans).map(function(x){return em[x];}).join(''); }).join('\n');
+    var t='Canuckle '+(mode==='daily'?'#'+(dayIdx+1):'Practice')+' '+(won?guesses.length:'X')+'/6'+(hintN?' ('+hintN+' hint'+(hintN>1?'s':'')+')':'')+'\n\n'+grid;
+    var done=function(){toast('Result copied to clipboard');};
+    if(navigator.clipboard&&window.isSecureContext){ navigator.clipboard.writeText(t).then(done,function(){}); return; }
+    var a=document.createElement('textarea'); a.value=t; document.body.appendChild(a); a.select(); try{document.execCommand('copy');done();}catch(e){} a.remove();
+  });
+
+  document.querySelectorAll('.nav a').forEach(function(a){a.addEventListener('click',function(){document.querySelector('.nav').classList.remove('open');});});
+  $('yr').textContent=new Date().getFullYear();
+  load('daily');
+})();
+</script>
+</body>
+</html>
